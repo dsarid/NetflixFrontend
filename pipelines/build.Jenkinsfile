@@ -1,6 +1,6 @@
 
 // pipelines/build.Jenkinsfile
-
+def IMAGE_FULL_NAME_PARAM
 pipeline {
     agent {
         label 'general'
@@ -48,7 +48,11 @@ pipeline {
                     # build an image
                     docker build -t $IMAGE_FULL_NAME .
                     docker push $IMAGE_FULL_NAME
+                    echo $IMAGE_FULL_NAME >> IMAGE_FULL_NAME.txt
                 '''
+                script {
+                    IMAGE_FULL_NAME_PARAM = readFile('IMAGE_FULL_NAME.txt')
+                }
             }
         }
         stage('Trigger Deploy') {
