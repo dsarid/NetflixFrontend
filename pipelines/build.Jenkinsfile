@@ -54,7 +54,7 @@ pipeline {
         stage('Trigger Deploy') {
             steps {
                 build job: 'NetflixFrontendDeploy', wait: false, parameters: [
-                string(name: 'SERVICE_NAME', value: "nf-frontend")
+                string(name: 'SERVICE_NAME', value: "nf-frontend"),
                 string(name: 'IMAGE_FULL_NAME_PARAM', value: "$IMAGE_FULL_NAME")
                 ]
             }
