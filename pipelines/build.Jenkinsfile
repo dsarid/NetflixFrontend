@@ -11,7 +11,7 @@ pipeline {
     }
 
         options {
-        timeout(time: 30, unit: 'MINUTES')  // discard the build after 10 minutes of running
+        timeout(time: 15, unit: 'MINUTES')  // discard the build after 10 minutes of running
         timestamps()  // display timestamp in console output
     }
 
@@ -49,6 +49,13 @@ pipeline {
                     docker build -t $IMAGE_FULL_NAME .
                     docker push $IMAGE_FULL_NAME
                 '''
+            }
+        stage('Trigger Deploy') {
+            steps {
+            build job: 'NetflixFrontendDeploy', wait: false, parameters: [
+            string(name: 'SERVICE_NAME', value: "nf-frontend")
+            string(name: 'IMAGE_FULL_NAME_PARAM', value: "$IMAGE_FULL_NAME")
+            ]
             }
         }
     }
