@@ -48,7 +48,7 @@ pipeline {
                     # build an image
                     docker build -t $IMAGE_FULL_NAME .
                     docker push $IMAGE_FULL_NAME
-                    echo $IMAGE_FULL_NAME >> IMAGE_FULL_NAME.txt
+                    echo -n $IMAGE_FULL_NAME > IMAGE_FULL_NAME.txt
                 '''
                 script {
                     IMAGE_FULL_NAME_PARAM = readFile('IMAGE_FULL_NAME.txt')
